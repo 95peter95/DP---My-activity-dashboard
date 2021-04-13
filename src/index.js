@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './Router'
 import 'semantic-ui-css/semantic.min.css'
+import { QueryClient, QueryClientProvider } from 'react-query'
+ 
+const queryClient = new QueryClient()
 
 ReactDOM.render(
   <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
     <AppRouter />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

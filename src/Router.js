@@ -12,6 +12,9 @@ import Home from "./pages/Home"
 import React, { useState, useEffect } from 'react';
 import axiosClient from './axiosClient';
 import { prepareData } from './utils/dataHelpers'
+import Courses from "./pages/Courses";
+import CourseDetail from "./pages/CourseDetail";
+import AllLogs from "./pages/AllLogs";
 
 
 export default function AppRouter() {
@@ -36,91 +39,100 @@ export default function AppRouter() {
 
         setIsLoading(false)
     }
-    
+
 
     return (
 
 
-        
+
         <div>
-        <h3 class="ui block header" style={{backgroundColor:"#147BAF",padding:25, fontSize:25, fontWeight:15,paddingleft:35, color:"white"}}><i aria-hidden="true" class="angle double right icon"></i>My Moodle Activity Dashboard</h3>
+            <h3 class="ui block header" style={{ backgroundColor: "#147BAF", padding: 25, fontSize: 25, fontWeight: 15, paddingleft: 35, color: "white" }}><i aria-hidden="true" class="angle double right icon"></i>My Activity Dashboard</h3>
 
-        <Router>
-        <div class="ui equal width grid">
-        <div class="stretched row">
-            <div class="three wide column">
-                
-                <div class="ui segment" style={{backgroundColor:"#147BAF"}}>
+            <Router>
+                <div class="ui equal width grid">
+                    <div class="stretched row">
+                        <div class="three wide column">
 
-                <div class="ui secondary vertical menu" style={{backgroundColor:"#147BAF"}}>
+                            <div class="ui segment" style={{ backgroundColor: "#147BAF" , height:768+"px", maxHeight:768+"px" }}>
 
-                    <Link to= "/">
-                        <a class="item" style={{fontWeight:1000,fontSize:16,color:"white"}}>  Home <i aria-hidden="true" class="home icon"></i></a>
-                    </Link >
+                                <div class="ui secondary vertical menu" style={{ backgroundColor: "#147BAF"}}>
 
-                    <div class="ui divider"></div>
+                                    <Link to="/">
+                                        <a class="item" style={{ fontWeight: 1000, fontSize: 16, color: "white" }}>  Home <i aria-hidden="true" class="home icon"></i></a>
+                                    </Link >
 
-                    <Link to= "/Students">
-                        <a class="item" style={{fontWeight:1000,fontSize:16,color:"white"}}>Students <i aria-hidden="true" class="users icon"></i></a>
-                    </Link>
+                                    <div class="ui divider"></div>
 
-                    <div class="ui divider"></div>
+                                    <Link to="/Students">
+                                        <a class="item" style={{ fontWeight: 1000, fontSize: 16, color: "white" }}>Students <i aria-hidden="true" class="users icon"></i></a>
+                                    </Link>
 
-                    <Link to= "/Courses">
-                        <a class="item" style={{fontWeight:1000,fontSize:16,color:"white"}}>Courses <i aria-hidden="true" class="tasks icon"></i></a>
-                    </Link >
+                                    <div class="ui divider"></div>
 
-                    <div class="ui divider"></div>
+                                    <Link to="/Courses">
+                                        <a class="item" style={{ fontWeight: 1000, fontSize: 16, color: "white" }}>Courses <i aria-hidden="true" class="tasks icon"></i></a>
+                                    </Link >
 
-                    <Link to= "/ml">
-                    <a class="item" style={{fontWeight:1000,fontSize:16,color:"white"}}>Machine learning <i aria-hidden="true" class="desktop icon"></i></a>
-                    </Link>
+                                    <div class="ui divider"></div>
 
-                    </div>
-                    
+                                    <Link to="/ml">
+                                        <a class="item" style={{ fontWeight: 1000, fontSize: 16, color: "white" }}>Machine learning <i aria-hidden="true" class="desktop icon"></i></a>
+                                    </Link>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="twelve wide column">
+                            <div class="ui segment" style={{ backgroundColor: "#F8FAF9", marginLeft: -22 }}>
+                                <Switch>
+                                    <Route
+                                        exact
+                                        path="/"
+                                        component={() => <Home logs={state.logs}/>}
+                                    />
+
+                                    <Route
+                                        exact
+                                        path="/Students"
+                                        component={(p) => <AllUsers users={state.users} {...p} logs={state.logs} />}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/user/:id"
+                                        component={({ match, history }) => <UserDetail logs={state.logs} match={match} history={history} />}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/Courses"
+                                        component={Courses}
+                                    />
+                                           <Route
+                                        exact
+                                        path="/Courses/:id"
+                                        component={({ match, history }) => <CourseDetail logs={state.logs} match={match} history={history} />}
+                                    />
+
+                                </Switch>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="twelve wide column">
-                    <div class="ui segment" style={{backgroundColor:"#F8FAF9", marginLeft:-22}}>
-                    <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        component={() => <Home />}
-                    />
 
-                    <Route
-                        exact
-                        path="/Students"
-                        component={({history}) => <AllUsers users={state.users} history={history} />}
-                    />
-                    <Route
-                        exact
-                        path="/user/:id"
-                        component={({ match, history }) => <UserDetail logs={state.logs} match={match} history={history} />}
-                    />
-                    
-                    
-                </Switch>
-                    </div>
-                    </div>
-                    </div>   
-                </div>
-        
 
                 {isLoading && (
-                <div class="ui active transition visible inverted dimmer">
-                    <div class="content">
-                        <div class="ui large text loader">Loading data</div>
-                    </div>
+                    <div class="ui active transition visible inverted dimmer">
+                        <div class="content">
+                            <div class="ui large text loader">Loading data</div>
                         </div>
-                        
-                          
+                    </div>
+
+
                 )}
-                
-                
-        </Router >
-        
+
+
+            </Router >
+
         </div>
     );
 }

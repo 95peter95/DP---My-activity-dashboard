@@ -1,4 +1,6 @@
 import lodash from 'lodash'
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict'
+
 
 export function prepareData(data) {
     const logs = data.filter(log => log.actor?.account?.name)
@@ -20,5 +22,10 @@ export function prepareData(data) {
 export function getUserActivity(data, userId) {
     const activity = data.filter(log => log.actor?.account?.name === userId);
 
-    return activity;
+    return activity.reverse()
 }
+
+export function getTimeFromNow(timestamp) {
+    return formatDistanceToNowStrict(new Date(timestamp))
+}
+
