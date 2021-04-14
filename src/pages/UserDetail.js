@@ -129,7 +129,7 @@ function UserDetail({ logs, match }) {
                                 <div class="content">
                                     <div class="summary">
                                         <a class="user">{log.verb.display.en}</a> {log.object.objectType.toLowerCase()} {log.object.definition.name.en}
-                                        <div class="date">at  {format(new Date(log.timestamp), 'd MMMM yyyy')}</div>
+                                        <div class="date">at  {format(new Date(log.timestamp), 'PPpp')}</div>
                                     </div>
                                 </div>
                             </div>
